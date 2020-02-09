@@ -1,0 +1,46 @@
+buildscript {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        maven { url 'https://repo.spring.io/milestone' }
+    }
+    dependencies {
+        classpath ("org.springframework.boot:spring-boot-gradle-plugin:${springBootVerison}")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'io.spring.dependency-management'
+apply plugin: 'maven-publish'
+
+group 'com.softwarfare.biothenticate'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.11
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+dependencies {
+    compile group: 'com.softwarfare.biothenticate', name: 'biothenticate-api-java', version: '1.0-SNAPSHOT'
+    compileOnly group: 'org.springframework.boot', name: 'spring-boot-parent', version: springBootVerison
+    compileOnly group: 'org.springframework.boot', name: 'spring-boot-autoconfigure', version: springBootVerison
+    compileOnly group: 'org.springframework.boot', name: 'spring-boot-configuration-processor', version: springBootVerison
+    compileOnly group: 'org.springframework.security', name: 'spring-security-config', version: '5.2.1.RELEASE'
+
+    compileOnly group: 'org.projectlombok', name: 'lombok', version: lombokVersion
+    annotationProcessor group: 'org.projectlombok', name: 'lombok', version: lombokVersion
+
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+    }
+}
